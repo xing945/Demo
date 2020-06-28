@@ -10,3 +10,6 @@ git reflog 记录版本更新
 git diff(id)比较工作目录和暂存区的区别
 git checkout 切换分支
 git branch 查看分支
+
+git pull 抓取代码
+git push 上传到github
