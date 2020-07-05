@@ -1,0 +1,220 @@
+@import './reset.css'; /*重置样式表*/
+html,
+body {
+	width: 100%;
+    height: 100%;
+    user-select: none;
+}
+/* header部分 */
+.header {
+	height: 70px;
+	line-height: 70px;
+	background-color: #354457;
+}
+.header .logo {
+	font-size: 14px;
+	color: #b3bcc5;
+	padding-left: 20px;
+}
+
+.header .logo img {
+	width: 30px;
+	height: 30px;
+	vertical-align: middle;
+}
+
+/*侧栏*/
+.side-menu {
+	width: 200px;
+	height: calc(100% - 70px);
+	float: left;
+	background-color: #4d5e70;
+}
+.side-menu dl dt {
+	padding-left: 10px;
+}
+.side-menu dl dd {
+	padding-left: 20px;
+}
+.side-menu dl dt,
+.side-menu dl dd {
+	color: #b3bcc5;
+	height: 40px;
+	line-height: 40px;
+	font-size: 14px;
+}
+.side-menu dl dd:hover {
+	background-color: rgba(255, 255, 255, 0.5);
+	color: #354457;
+}
+
+.side-menu dl dd.active {
+	background-color: #ddd;
+	color: #354457;
+}
+
+/*内容展示部分*/
+.content {
+	width: calc(100% - 200px);
+	height: calc(100% - 70px);
+	float: right;
+	background-color: #eee;
+    position: relative;
+    overflow: auto;
+}
+.content > div.active {
+	display: block;
+}
+.content > div {
+	display: none;
+}
+/* 学生列表部分 */
+.student-list {
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.student-list table {
+	width: 100%;
+	text-align: center;
+}
+
+.student-list table thead {
+	background-color: #e3e8ee;
+	color: #000;
+	height: 34px;
+	line-height: 34px;
+}
+.student-list table thead th {
+	font-weight: bold;
+}
+
+.student-list table tbody {
+	background-color: #fff;
+	line-height: 30px;
+}
+
+.btn {
+	border: none;
+	outline: none;
+	padding: 5px 10px;
+	color: #fff;
+	cursor: pointer;
+}
+
+.student-list table tbody .btn.edit {
+	background-color: #5cb85c;
+}
+.student-list table tbody .btn.del {
+	background-color: #d9534f;
+}
+
+/* 添加学生部分 */
+form {
+	width: 400px;
+	margin: 50px auto;
+}
+
+form .item{
+	margin: 10px 0;
+}
+form label {
+	width: 100px;
+	text-align: right;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+form label.sex{
+    width:auto;
+}
+
+form .btn{
+    padding:5px 25px;
+    color: #354457;
+    background-color: rgb(240, 240, 240);
+    border: 1px solid #354457;
+    margin:0 auto;
+}
+
+/* 分页 */
+.turn-page{
+    text-align: center;
+}
+
+.turn-page .btn{
+    color: #354457;
+    background-color: #fff;
+    display:none;
+}
+
+/*编辑表单*/
+.modal{
+    position: fixed;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0,0,0,.5);
+    display:none;
+}
+
+.modal .modal-content{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    width:500px;
+    height:450px;
+    padding:20px;
+    box-sizing: border-box;
+    background-color: #fff;
+    z-index: 999;
+}
+
+.modal .modal-content h2{
+    font-weight: bold;
+    font-size:1.17em;
+}
+
+/* 搜索功能 */
+.search{
+    width:100%;
+    height:40px;
+    margin: 10px auto;
+}
+.search .search-inp{
+    width:100px;
+    height:100%;
+    padding:0 5px;
+    border:none;
+    outline: none;
+    font-size:1em;
+    color:rgb(5, 22, 4);
+    background-color: aquamarine;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.search .search-btn{
+    width:100px;
+    height:100%;
+    margin-left:-6px;
+    background-color: aquamarine;
+    vertical-align: top;
+    outline: none; 
+    font-size:1em;
+    color:#fff;
+}
+.search .search-sex{
+    width:70px;
+    height:100%;
+    background-color: aquamarine;
+    color:#fff;
+    font-size:18px;
+    border:none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-left: -6px;
+}
