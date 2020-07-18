@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			#demo {
+				background: #b3effe;
+				height: 50px;
+				padding: 10px 20px;
+				box-sizing: border-box;
+			}
+			.left {
+				float: left;
+				height: 30px;
+				line-height: 30px;
+			}
+			.title::after {
+				content: '|';
+				margin-left: 20px;
+				font-size: 27px;
+				vertical-align: -2px;
+				color: #ccc;
+			}
+			.left ul {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				margin-left: 20px;
+				height: 30px;
+				overflow: hidden;
+			}
+			.left ul li {
+				height: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demo">
+			<div class="title left">最新公告</div>
+			<div class="left">
+				<ul>
+					<li>1. Lorem ipsum dolor sit.</li>
+					<li>2. Porro ea tempora enim!</li>
+					<li>3. Quasi blanditiis quisquam minus.</li>
+					<li>4. Nesciunt blanditiis iure nobis.</li>
+					<li>5. Illo, exercitationem? Voluptatem, nostrum?</li>
+				</ul>
+			</div>
+		</div>
+		<script src="./animate.js"></script>
+		<script>
+			const oUl = document.getElementsByTagName('ul')[0]
+			const height = 30
+			let curTop = 0 //由于浏览器中scrollTop取值不精确
+			//复制一个li
+			function cloneFirstLi() {
+				const li = oUl.children[0].cloneNode(true)
+				oUl.appendChild(li)
+			}
+			//开始滚动
+			function startScroll() {
+				setInterval(() => {
+					const animate = new plugin.Animate({
+						total: 300,
+						begin: {
+							top: curTop,
+						},
+						end: {
+							top: curTop + height,
+						},
+						onStart() {
+							console.log('start')
+						},
+						onMove() {
+							curTop = this.curData.top
+							oUl.scrollTop = curTop
+						},
+						onOver() {
+                            // 到达底部瞬间到顶部
+							if (oUl.scrollHeight - height === curTop) {
+								curTop = 0
+								oUl.scrollTop = curTop
+							}
+						},
+					})
+					animate.start()
+				}, 2000)
+			}
+			cloneFirstLi()
+			startScroll()
+		</script>
+	</body>
+</html>
