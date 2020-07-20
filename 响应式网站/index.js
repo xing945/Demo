@@ -45,8 +45,8 @@ function banner() {
     picUl.addEventListener('transitionend',function(){
         //图片已经走到最后一张了，这时候要让ul回到0才能接上
         if(index === picLis.length - 1){
-            picUl.style.left = 0;
-            picUl.style.transition = '';
+            this.style.left = 0;
+            this.style.transition = '';
             index = 0;
         }
     })
