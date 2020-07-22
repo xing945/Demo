@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			canvas {
+				border: 1px solid;
+			}
+			#box {
+				width: 300px;
+				height: 300px;
+				border: 1px solid;
+				background-size: cover;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="500" height="500"></canvas>
+		<div id="box"></div>
+		<img src="" alt="" />
+		<script src="./gaussBlur.js"></script>
+		<script>
+			let canvas = document.getElementById('canvas')
+			let context = canvas.getContext('2d')
+			let img = new Image()
+			img.src = './images/img.jpg'
+			img.onload = function() {
+				//1、在canvas里画图
+				//context.drawImage(img, 50,50);
+				// context.drawImage(img, 50, 50, 200, 200);
+				context.drawImage(img, 450, 70, 130, 150, 0, 0, 400, 400)
+
+				//2、导出图片
+				let imgSrc = canvas.toDataURL()
+				console.log(imgSrc)
+				let newImg = document.querySelector('img')
+				newImg.src = imgSrc
+
+				//3、操作像素
+				let pxInfo = context.getImageData(0, 0, 500, 500)
+				console.log(pxInfo) //500*500=250000*4=1000000	rgba	0-255
+                context.putImageData(pxInfo, 50, 50)
+                
+                // 高斯模糊
+				window.player.blurImg(img, document.getElementById('box'))
+			}
+		</script>
+	</body>
+</html>
