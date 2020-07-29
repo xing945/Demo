@@ -1,4 +1,4 @@
-import {Rectangle} from './rectangle.js'
+import {Rectangle} from './Rectangle.js'
 const skyDom = document.getElementsByClassName('sky')[0];
 const skyStyles = getComputedStyle(skyDom);
 const skyWidth = parseFloat(skyStyles.width);
@@ -8,12 +8,13 @@ const skyHeight = parseFloat(skyStyles.height);
  */
 export class Sky extends Rectangle{
     constructor(){
-        super(skyWidth,skyHeight,0,0,-50,0,skyDom);
+        super(skyWidth,skyHeight,0,0,-50,0,skyDom)
     }
-    // 判断是否移出
+    // 判断边界
     onMove(){
         if(this.left <= -skyWidth / 2){
             this.left = 0;
         }
     }
 }
+

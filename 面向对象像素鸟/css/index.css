@@ -1,14 +1,13 @@
-html,
-body {
-	overflow: hidden;
+body{
+    overflow: hidden;
 }
 #game {
 	width: 800px;
 	height: 500px;
 	border: 2px solid;
-	overflow: hidden;
 	margin: 0 auto;
 	position: relative;
+	overflow: hidden;
 }
 
 #game .sky {
@@ -33,10 +32,10 @@ body {
 #game .bird {
 	width: 33px;
 	height: 26px;
-	background-image: url('../img/bird.png');
 	position: absolute;
 	left: 150px;
-	top: 150px;
+    top: 150px;
+    background-image: url('../img/bird.png');
 }
 
 #game .bird.swing1{
@@ -51,35 +50,36 @@ body {
     background-position: -113px -10px;
 }
 
-p {
-	text-align: center;
+#game .pipe{
+    position: absolute;
+    width:52px;
+    height:100px;
 }
 
-#game .pipe {
-	position: absolute;
-	width: 52px;
+#game .pipe.up{
+    background: url('../img/pipeDown.png') no-repeat;
+    background-position: left bottom;
 }
 
-#game .pipe.up {
-	background: url('../img/pipeDown.png') no-repeat;
-	background-position: left bottom;
+#game .pipe.down{
+    background: url('../img/pipeUp.png') no-repeat;
 }
 
-#game .pipe.down {
-	background: url('../img/pipeUp.png') no-repeat;
-}
-
-#game .over {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	background: rgba(0, 0, 0, 0.5);
-	z-index: 999;
-	color: #fff;
-	font-size: 5em;
-    text-align: center;
+.over {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9;
     line-height: 500px;
+    color: #fff;
+    font-size: 5em;
+    text-align: center;
     display: none;
+}
+
+p{
+    text-align: center;
 }
