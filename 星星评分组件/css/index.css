@@ -1,0 +1,20 @@
+.star-container .stars{
+    display: inline-block;
+    vertical-align: -2px;
+    cursor: pointer;
+}
+
+.star-container .stars span{
+    width: 16px;
+    height: 16px;
+    float: left;
+    background-size: 100%;
+}
+
+.star-container .stars span.fill{
+    background-image: url('../img/star_fill.png');
+}
+
+.star-container .stars span.hollow{
+    background-image: url('../img/star_hollow.png');
+}

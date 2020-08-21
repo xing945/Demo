@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <div id="star1">
+        <!-- <div class="star-container">
+            <div class="stars">
+                <span class="fill"></span>
+                <span class="fill"></span>
+                <span class="fill"></span>
+                <span class="hollow"></span>
+                <span class="hollow"></span>
+            </div>
+            <label>推荐</label>
+        </div> -->
+    </div>
+    <div id="star2"></div>
+    <div id="star3"></div>
+    <script src="./js/index.js"></script>
+    <script>
+        // 创建星星评分
+        createStar({
+            // 装星星的容器
+            dom:document.getElementById('star1'),
+            // 一共有多少课星星
+            starNumber:5,
+            // 当前固定的评分
+            starValue:4,
+            // 右侧的文字
+            starText:['','A','B','C','D','E']
+        })
+        createStar({
+            // 装星星的容器
+            dom:document.getElementById('star2'),
+        })
+        createStar({
+            // 装星星的容器
+            dom:document.getElementById('star3'),
+            // 一共有多少课星星
+            starNumber:3,
+            // 当前固定的评分
+            starValue:1,
+            // 右侧的文字
+            starText: ["", "差评", "中评", "好评"],
+        })
+    </script>
+</body>
+</html>

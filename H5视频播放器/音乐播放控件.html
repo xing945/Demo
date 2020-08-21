@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 850px;
+            height: 400px;
+            margin: 0 auto;
+            border: 1px solid;
+        }
+
+        .wrapper video {
+            width: 100%;
+            height: 100%;
+        }
+
+        .menu {
+            position: absolute;
+            left: 0px;
+            bottom: 0;
+            z-index: 1;
+            width: 100%;
+            height: 50px;
+            background: rgba(17, 250, 95, 0.5);
+            display: none;
+        }
+
+        .menu .play {
+            position: absolute;
+            left: 5px;
+            top: 10px;
+            width: 60px;
+            height: 30px;
+            font-size: 16px;
+            user-select: none;
+            border: 1px solid #fff;
+            color: rgb(3, 40, 43);
+            line-height: 30px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .menu .time {
+            position: absolute;
+            left: 100px;
+            top: 10px;
+            width: 100px;
+            height: 30px;
+            font-size: 16px;
+            user-select: none;
+            color: rgb(255, 255, 255);
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .bar {
+            position: absolute;
+            left: 0;
+            top: -2px;
+            width: 100%;
+            height: 2px;
+            background-color: teal;
+        }
+
+        .bar .bar-content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0px;
+            height: 2px;
+            background-color: rgb(244, 255, 94);
+        }
+
+        .bar i {
+            position: absolute;
+            left: 0px;
+            top: -2px;
+            width: 6px;
+            height: 6px;
+            border-radius: 4px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .quick {
+            position: absolute;
+            left: 520px;
+            top: 10px;
+            width: 60px;
+            height: 30px;
+            font-size: 20px;
+            user-select: none;
+            color: rgb(255, 255, 255);
+            line-height: 30px;
+            border: 1px solid #fff;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .quick-list {
+            list-style: none;
+            position: absolute;
+            left: 500px;
+            top: -120px;
+            width: 100px;
+            height: 120px;
+            color: white;
+            background-color: rgba(0, 128, 128, .3);
+            display: none;
+        }
+
+        .quick-list li {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .quick-list li:hover {
+            background-color: rgba(0, 128, 128, .8);
+        }
+
+        .vol-add,
+        .vol-ins,
+        .full-screen {
+            position: absolute;
+            top: 10px;
+            width: 60px;
+            height: 30px;
+            font-size: 20px;
+            user-select: none;
+            color: rgb(255, 255, 255);
+            line-height: 30px;
+            border: 1px solid #fff;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .vol-add {
+            left: 620px;
+        }
+
+        .vol-ins {
+            left: 700px;
+        }
+
+        .full-screen {
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <video src="./mp3/颜人中 - 晚安 - 歌词版.mkv"></video>
+        <div class="menu">
+            <div class="play">开始</div>
+            <div class="time">0:00 / 0:00</div>
+            <div class="bar">
+                <div class="bar-content"></div>
+                <i></i>
+            </div>
+            <div class="quick">倍速</div>
+            <ul class="quick-list">
+                <li>正常</li>
+                <li>x1.25</li>
+                <li>x1.5</li>
+                <li>x2</li>
+            </ul>
+            <div class="vol-add">+</div>
+            <div class="vol-ins">-</div>
+            <div class="full-screen">全屏</div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var wrapper = document.getElementsByClassName('wrapper')[0];
+            var menu = document.getElementsByClassName('menu')[0];
+            var video = document.getElementsByTagName('video')[0];
+            var playDom = document.getElementsByClassName('play')[0];
+            var time = document.getElementsByClassName('time')[0];
+            var bar = document.getElementsByClassName('bar')[0];
+            var barContent = bar.getElementsByClassName('bar-content')[0];
+            var barI = bar.getElementsByTagName('i')[0];
+            var quick = document.getElementsByClassName('quick')[0];
+            var quickList = document.getElementsByClassName('quick-list')[0];
+            var volAdd = document.getElementsByClassName('vol-add')[0];
+            var volIns = document.getElementsByClassName('vol-ins')[0];
+            var fullScreen = document.getElementsByClassName('full-screen')[0];
+
+            // 绑定事件
+            function bindEvent() {
+                // 移入
+                wrapper.onmouseenter = function () {
+                    menu.style.display = 'block';
+                }
+                // 移除
+                wrapper.onmouseleave = function () {
+                    menu.style.display = 'none';
+                    quickList.style.display = 'none';
+                }
+                // 开始暂停
+                playDom.onclick = function () {
+                    if (video.paused) {
+                        this.innerHTML = '暂停';
+                        video.play();
+                    } else {
+                        this.innerHTML = '播放';
+                        video.pause();
+                    }
+                }
+                // 时间
+                setInterval(function () {
+                    var total = video.duration;
+                    var nowTime = video.currentTime;
+                    time.innerHTML = `${parseInt(nowTime / 60)} : ${parseInt(nowTime % 60)} / ${parseInt(total / 60)} : ${parseInt(total % 60)}`;
+                    var num = nowTime / total * bar.clientWidth;
+                    barContent.style.width = num + 'px';
+                    barI.style.left = num + 'px';
+                }, 1000)
+                // 进度条
+                bar.onmouseenter = function () {
+                    bar.style.height = '16px';
+                    bar.style.top = '-10px';
+                    barContent.style.height = '16px';
+                    barI.style.height = '20px';
+                }
+                bar.onmouseleave = function () {
+                    bar.style.height = '2px';
+                    bar.style.top = '-2px';
+                    barContent.style.height = '2px';
+                    barI.style.top = '-2px';
+                    barI.style.height = '6px';
+                }
+                bar.onclick = function (e) {
+                    var loaction = e.layerX;
+                    var width = bar.clientWidth;
+                    var targetTime = loaction / width * video.duration;
+                    video.currentTime = targetTime;
+                }
+                // 倍速
+                quickFn();
+                // 加音量
+                volAdd.onclick = function () {
+                    video.volume = video.volume + 0.1 >= 1 ? 1 : video.volume + 0.1;
+                }
+                // 减音量
+                volIns.onclick = function () {
+                    video.volume = video.volume - 0.1 <= 0 ? 0 : video.volume - 0.1;
+                }
+                // 全屏
+                fullScreen.onclick = function () {
+                    var dom = document.documentElement;
+                    dom.requestFullscreen();
+                    wrapper.style.width = window.screen.width + 'px';
+                    wrapper.style.height = window.screen.height + 'px';
+                    video.style.width = window.screen.width + 'px';
+                    video.style.height = window.screen.height + 'px';
+                }
+                window.onkeydown = function (e) {
+                    if (e.keyCode === 27) {
+                        wrapper.style.width = 850 + 'px';
+                        wrapper.style.height = 400 + 'px';
+                        video.style.width = 850 + 'px';
+                        video.style.height = 400 + 'px';
+                    }
+                }
+            }
+
+            // 倍速
+            function quickFn() {
+                quick.onclick = function () {
+                    quickList.style.display = 'block';
+                }
+                quickList.onmouseleave = function () {
+                    this.style.display = 'none';
+                }
+                var quickLi = quickList.getElementsByTagName('li');
+                for (var i = 0; i < quickLi.length; i++) {
+                    quickLi[i].index = i;
+                    quickLi[i].onclick = function () {
+                        if (this.index === 0) { // 正常
+                            video.playbackRate = 1;
+                            quick.innerText = this.innerText;
+                            quickList.style.display = 'none';
+                        } else if (this.index === 1) { // 倍速1.25
+                            video.playbackRate = 1.25;
+                            quick.innerText = this.innerText;
+                            quickList.style.display = 'none';
+                        } else if (this.index === 2) { //倍速1.5
+                            video.playbackRate = 1.5;
+                            quick.innerText = this.innerText;
+                            quickList.style.display = 'none';
+                        } else { // 倍速2
+                            video.playbackRate = 2;
+                            quick.innerText = this.innerText;
+                            quickList.style.display = 'none';
+                        }
+                    }
+                }
+
+            }
+
+
+            bindEvent();
+        }())
+    </script>
+</body>
+
+</html>
