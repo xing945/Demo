@@ -76,7 +76,12 @@ export default {
       this.$store.state.answerStr = value;
     },
     handleRemove(index) {
-      this.answerList.splice(index, 1);
+      let isFlag = window.confirm("确定删除吗？");
+      if (isFlag) {
+        this.answerList.splice(index, 1);
+      } else {
+        return;
+      }
     },
   },
 };
