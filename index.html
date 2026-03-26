@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            margin: 0;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #game {
+            width: 400px;
+            height: 600px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .title {
+            border-bottom: 1px solid #000;
+            width: 100%;
+            height: 100px;
+            text-align: center;
+            font-size: 60px;
+            font-weight: bold;
+            line-height: 100px;
+            cursor: pointer;
+        }
+
+        .main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .row {
+            width: 100%;
+            height: 25%;
+            cursor: pointer;
+        }
+
+        .col {
+            width: 25%;
+            height: 100%;
+            border: 1px solid #000;
+            display: inline-block;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        .col.target {
+            background-color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game">
+        <h1 class="title">开始游戏</h1>
+        <div class="main"></div>
+    </div>
+    <script>
+        const game = {
+            timer: null,
+            step: 5,
+            score: 0,
+            flag: false,
+            init() {
+                this.initDom();
+                this.handle();
+            },
+            initDom() {
+                this.gameDom = document.getElementById('game');
+                this.titleDom = document.getElementsByClassName('title')[0];
+                this.mainDom = document.getElementsByClassName('main')[0];
+            },
+            handle() {
+                this.handleStart(); // 点击开始游戏
+                this.handleTarget(); // 点击小黑快
+            },
+            handleStart() {
+                let that = this;
+                this.titleDom.onclick = function () {
+                    this.style.display = 'none';
+                    that.move();
+                    that.flag = true;
+                }
+            },
+            move() {
+                this.timer = setInterval(this.render.bind(this), 20)
+            },
+            render() {
+                this.mainDom.style.top = this.mainDom.offsetTop + this.step + 'px';
+                if (this.mainDom.offsetTop >= 0) {
+                    this.renderRow(); // 渲染行
+                    this.mainDom.style.top = '-150px';
+                }
+                this.judgeLastRow();// 判断 最后一行是否包含target元素
+            },
+            renderRow() {
+                // 随机下标
+                const index = Math.floor(Math.random() * 4)
+                const row = document.createElement('div');
+                row.setAttribute('class', 'row'); // 设置该元素的class为row
+                for (let i = 0; i < 4; i++) {
+                    const col = document.createElement('div');
+                    col.setAttribute('class', 'col');
+                    row.appendChild(col);
+                }
+                row.children[index].classList.add('target');
+                this.mainDom.insertBefore(row, this.mainDom.childNodes[0]);
+            },
+            judgeLastRow() {
+                const rowNum = this.mainDom.childNodes.length;
+                if (rowNum === 6) {
+                    const lastRow = this.mainDom.childNodes[rowNum - 1];
+                    for (let i = 0; i < 4; i++) {
+                        let isContain = lastRow.childNodes[i].classList.contains('target');
+                        // 如果有直接就结束
+                        if (isContain) {
+                            this.over();
+                            break;
+                        }
+                    }
+                    // 移除最后一行，保持整体游戏区域内只有6行元素。
+                    // 因为我们每一次判断的都是第6行元素是否有列元素class包含 “target”
+                    this.mainDom.removeChild(lastRow)
+                }
+            },
+            handleTarget() {
+                let that = this;
+                /**
+                 * 点击小黑快
+                 */
+                this.mainDom.addEventListener('touchstart', function (e) {
+                    let dom = e.target;
+                    let isTarget = dom.classList.contains('target');
+                    if (!that.flag) return; // 如果游戏未开始，什么都不做
+                    if (isTarget) {
+                        dom.classList.remove('target');
+                        dom.style.backgroundImage = 'url(./1.jpg)'
+                        dom.style.backgroundSize = 'cover'
+                        that.score++; // 加分
+                        that.levelUp(); // 等级提升
+                    } else {
+                        that.over(); //游戏结束
+                    }
+                }, false)
+            },
+            over() {
+                clearInterval(this.timer);
+                this.flag = false;
+                alert(`游戏结束，当前得分${this.score}`)
+            },
+            levelUp() {
+                if (this.score % 5 === 0) {
+                    this.step += 2;
+                }
+            }
+        }
+
+        game.init();
+    </script>
+</body>
+
+</html>
